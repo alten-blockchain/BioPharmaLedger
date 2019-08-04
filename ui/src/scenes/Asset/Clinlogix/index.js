@@ -27,7 +27,7 @@ class Clinlogix extends Component {
                         <a className="data-tile tile-type2">
                             {/*<h1>Management Dashboard</h1>*/}
                             {/*<h2>Setup and Configuration of Studies, Orgs, and Users</h2>*/}
-                            <h1>Data Management</h1>
+                            <h1>Option 2</h1>
                             <h2>Management and operation of study files</h2>
                         </a>
                     </div>
@@ -35,7 +35,7 @@ class Clinlogix extends Component {
                         <a className="data-tile tile-type3">
                             {/*<h1>Compliance Dashboard</h1>*/}
                             {/*<h2>Blockchain Ledger dashboard for compliance</h2>*/}
-                            <h1>Data Management</h1>
+                            <h1>Option 3</h1>
                             <h2>Management and operation of study files</h2>
                         </a>
                     </div>
@@ -49,17 +49,15 @@ class Clinlogix extends Component {
                     </div>
                     <div className="data-tile-wrapper">
                         <a  className="data-tile tile-type2">
-                            {/*<h1>Upload</h1>*/}
+                            <h1>Upload</h1>
                             {/*<h2>Upload files</h2>*/}
-                            <h1>Data Management</h1>
                             <h2>Management and operation of study files</h2>
                         </a>
                     </div>
                     <div className="data-tile-wrapper">
                         <a className="data-tile tile-type5">
-                            {/*<h1>Download</h1>*/}
+                            <h1>Download</h1>
                             {/*<h2>Download files</h2>*/}
-                            <h1>Data Management</h1>
                             <h2>Management and operation of study files</h2>
                         </a>
                     </div>
