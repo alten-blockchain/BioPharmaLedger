@@ -43,7 +43,6 @@
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     border-radius: 50%;
-    opacity: .8;
     background-color: #81c251;
     -webkit-transition: background-color .5s linear;
     -ms-transition: background-color .5s linear;
