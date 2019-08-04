@@ -44,13 +44,14 @@
     transform: translateX(-50%);
     border-radius: 50%;
     opacity: .8;
+    background-color: #81c251;
     -webkit-transition: background-color .5s linear;
     -ms-transition: background-color .5s linear;
     transition: background-color .5s linear;
 }
 
 .back-arrow-tile img:hover {
-    background-color: #81c251;
+    background-color: #837fb7;
 }
 
 #main-tiles, #secondary-tiles {
