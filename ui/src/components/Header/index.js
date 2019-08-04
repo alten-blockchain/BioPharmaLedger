@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import { logout } from '../../actions/authentication.actions';
 import LoadingBar from 'react-redux-loading-bar';
 
+import './header.css';
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -30,12 +32,15 @@ class Header extends Component {
     const { user, classes, isAuthenticated, logout, history } = this.props;
     const { popoverEl } = this.state;
     const isOpen = Boolean(popoverEl);
+    const headerStyles = {
+        backgroundColor: '#373B3C'
+    };
 
     return (
       <AppBar position="static">
         <Toolbar className={classes.toolbar} >
           <Typography variant="h6" color="inherit" onClick={() => { history.push('/') }} className={classes.heading}>
-            Track And Trace
+            Clinlogix
           </Typography>
 
           {
@@ -100,7 +105,7 @@ const styles = theme => ({
   },
   loadingBar: {
     top: '0px',
-    backgroundColor: '#E10050',
+    backgroundColor: '#81c251',
     zIndex: 999,
     height: '4px'
   },

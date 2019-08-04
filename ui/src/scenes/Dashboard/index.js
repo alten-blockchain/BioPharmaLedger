@@ -6,6 +6,7 @@ import { Grid, AppBar, Typography, Toolbar } from '@material-ui/core';
 
 import CreateAssetModal from '../Asset/Create';
 import AssetsList from '../../scenes/Asset/List';
+import ClinlogixLanding from '../../scenes/Asset/Clinlogix';
 import './dashboard.css';
 import SnackbarMessage from "../../components/SnackbarMessage";
 class Dashboard extends Component {
@@ -20,15 +21,16 @@ class Dashboard extends Component {
       <div className="dashboard">
         <Grid container>
           <AppBar position="static" color="default">
-            <Toolbar>
-              <Typography variant="h6" color="inherit" className="appbar-container">
-                {this.isManufacturer && <CreateAssetModal />}
-              </Typography>
-            </Toolbar>
+            {/*<Toolbar>*/}
+              {/*<Typography variant="h6" color="inherit" className="appbar-container">*/}
+                {/*{this.isManufacturer && <CreateAssetModal />}*/}
+              {/*</Typography>*/}
+            {/*</Toolbar>*/}
           </AppBar>
         </Grid>
         <Grid container>
-          <AssetsList />
+          {/*<AssetsList />*/}
+          <ClinlogixLanding />
         </Grid>
         <SnackbarMessage />
       </div>
