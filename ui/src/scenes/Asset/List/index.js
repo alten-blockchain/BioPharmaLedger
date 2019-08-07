@@ -36,6 +36,8 @@ class AssetsList extends Component {
         </a>
     );
 
+
+
     return (
       <div className="dashboard-container">
 
@@ -73,6 +75,15 @@ class AssetsList extends Component {
                 </select>
                 <span>File(s):</span>
                 <div className="table-buttons">
+                    <label className="choose-files">
+                        <input id="upload" type="file" />
+                        <Button className='select-button' onClick={selectFile}>
+                            Select File
+                        </Button>
+                        <div className="files-to-upload">
+                            <span id="fileName">-- choose a file to upload --</span>
+                        </div>
+                    </label>
                     <Button className='upload-button' onClick={() => {}}>
                         Upload
                     </Button>
@@ -98,6 +109,25 @@ class AssetsList extends Component {
   }
 }
 
+function selectFile() {
+    var input = document.getElementById('upload');
+    input.click();
+    input.onchange = function() {
+        var filePath = input.value;
+        var startIndex = (filePath.indexOf('\\') >= 0 ? filePath.lastIndexOf('\\') : filePath.lastIndexOf('/'));
+        var filename = filePath.substring(startIndex);
+        if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+            filename = filename.substring(1);
+        }
+        if (filename.length < 1) {
+            return
+        }
+        if (filename.length > 35) {
+            filename = filename.substring(0, 35) + "...";
+        }
+        document.getElementById("fileName").innerHTML = filename;
+    };
+}
 
 function showHideOptions() {
     const mainTiles = document.getElementById('main-tiles');

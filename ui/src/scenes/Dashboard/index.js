@@ -13,7 +13,7 @@ class Dashboard extends Component {
 
   get isManufacturer() {
     const { USER_ROLE } = this.props;
-    return parseInt(this.props.authentication.user['role'], 10) === USER_ROLE.MANUFACTURER;
+    return parseInt(this.props.authentication.user['role'], 10) === USER_ROLE.ADMIN;
   }
 
   render() {
