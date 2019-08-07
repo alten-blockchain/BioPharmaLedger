@@ -4,66 +4,89 @@ import { connect } from "react-redux";
 import { Grid } from '@material-ui/core';
 
 import { getAssets } from "../../../actions/asset.actions";
+import AssetsList from '../List';
 import './landing.css';
-import backArrow from './back-arrow.png';
 
 class Clinlogix extends Component {
 
+    get isAdmin() {
+        const { user, USER_ROLE } = this.props;
+        return parseInt(this.props.user['role'], 10) === USER_ROLE.ADMIN;
+    }
 
     renderTiles = () => {
-        const { user, USER_ROLE } = this.props;
+        // const { user, USER_ROLE } = this.props;
+
+        var html;
+        if (this.isAdmin){
+            html = (
+                <div className="landing-container">
+
+                    <div id="main-tiles" className="">
+                        <div className="data-tile-wrapper">
+                            <a onClick={showHideOptions} className="data-tile tile-type1">
+                                <h1>Study Files</h1>
+                                <h2>Management and operation of study files</h2>
+                            </a>
+                        </div>
+                        <div className="data-tile-wrapper">
+                            <a className="data-tile tile-type2">
+                                {/*<h1>Management Dashboard</h1>*/}
+                                {/*<h2>Setup and Configuration of Studies, Orgs, and Users</h2>*/}
+                                <h1>Option 2</h1>
+                                <h2>Management and operation of study files</h2>
+                            </a>
+                        </div>
+                        <div className="data-tile-wrapper">
+                            <a className="data-tile tile-type3">
+                                {/*<h1>Compliance Dashboard</h1>*/}
+                                {/*<h2>Blockchain Ledger dashboard for compliance</h2>*/}
+                                <h1>Option 3</h1>
+                                <h2>Management and operation of study files</h2>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="adminStudyFiles" className="">
+                        <Grid className="table-container" container>
+                            <AssetsList />
+                        </Grid>
+                    </div>
+
+                    {/*<div id="adminStudyFiles" className="">*/}
+                        {/*<div className="data-tile-wrapper">*/}
+                            {/*<a onClick={showHideOptions} className="back-arrow-tile">*/}
+                                {/*<img src={backArrow} />*/}
+                            {/*</a>*/}
+                        {/*</div>*/}
+                        {/*<div className="data-tile-wrapper">*/}
+                            {/*<a  className="data-tile tile-type2">*/}
+                                {/*<h1>Upload</h1>*/}
+                                {/*/!*<h2>Upload files</h2>*!/*/}
+                                {/*<h2>Management and operation of study files</h2>*/}
+                            {/*</a>*/}
+                        {/*</div>*/}
+                        {/*<div className="data-tile-wrapper">*/}
+                            {/*<a className="data-tile tile-type5">*/}
+                                {/*<h1>Download</h1>*/}
+                                {/*/!*<h2>Download files</h2>*!/*/}
+                                {/*<h2>Management and operation of study files</h2>*/}
+                            {/*</a>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+
+                </div>
+            );
+        } else {
+            html =(
+                <Grid container>
+                    <AssetsList />
+                </Grid>
+            );
+        }
 
         return (
-            <div className="landing-container">
-
-                <div id="main-tiles" className="">
-                    <div className="data-tile-wrapper">
-                        <a onClick={showHideOptions} className="data-tile tile-type1">
-                            <h1>Data Management</h1>
-                            <h2>Management and operation of study files</h2>
-                        </a>
-                    </div>
-                    <div className="data-tile-wrapper">
-                        <a className="data-tile tile-type2">
-                            {/*<h1>Management Dashboard</h1>*/}
-                            {/*<h2>Setup and Configuration of Studies, Orgs, and Users</h2>*/}
-                            <h1>Option 2</h1>
-                            <h2>Management and operation of study files</h2>
-                        </a>
-                    </div>
-                    <div className="data-tile-wrapper">
-                        <a className="data-tile tile-type3">
-                            {/*<h1>Compliance Dashboard</h1>*/}
-                            {/*<h2>Blockchain Ledger dashboard for compliance</h2>*/}
-                            <h1>Option 3</h1>
-                            <h2>Management and operation of study files</h2>
-                        </a>
-                    </div>
-                </div>
-
-                <div id="secondary-tiles" className="">
-                    <div className="data-tile-wrapper">
-                        <a onClick={showHideOptions} className="back-arrow-tile">
-                            <img src={backArrow} />
-                        </a>
-                    </div>
-                    <div className="data-tile-wrapper">
-                        <a  className="data-tile tile-type2">
-                            <h1>Upload</h1>
-                            {/*<h2>Upload files</h2>*/}
-                            <h2>Management and operation of study files</h2>
-                        </a>
-                    </div>
-                    <div className="data-tile-wrapper">
-                        <a className="data-tile tile-type5">
-                            <h1>Download</h1>
-                            {/*<h2>Download files</h2>*/}
-                            <h2>Management and operation of study files</h2>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
+            html
         );
     }
 
@@ -96,41 +119,30 @@ class Clinlogix extends Component {
 
 function showHideOptions() {
     const mainTiles = document.getElementById('main-tiles');
-    const secondaryTiles = document.getElementById('secondary-tiles');
+    const adminStudyFiles = document.getElementById('adminStudyFiles');
     if (!mainTiles.classList.contains('show') && !mainTiles.classList.contains('hide')){
         mainTiles.classList.toggle('hide');
         setTimeout(function(){
-            secondaryTiles.classList.toggle('hide');
-        }, 250);
+            adminStudyFiles.classList.toggle('hide');
+        }, 200);
     } else {
         if (mainTiles.classList.contains('show')){
             mainTiles.classList.toggle('hide');
             mainTiles.classList.toggle('show');
             setTimeout(function(){
-                secondaryTiles.classList.toggle('hide');
-                secondaryTiles.classList.toggle('show');
+                adminStudyFiles.classList.toggle('hide');
+                adminStudyFiles.classList.toggle('show');
             }, 250);
         } else {
-            secondaryTiles.classList.toggle('hide');
-            secondaryTiles.classList.toggle('show');
+            adminStudyFiles.classList.toggle('hide');
+            adminStudyFiles.classList.toggle('show');
             setTimeout(function(){
                 mainTiles.classList.toggle('hide');
                 mainTiles.classList.toggle('show');
             }, 250);
         }
     }
-
-    // if (!mainTiles.classList.contains('show') && !mainTiles.classList.contains('hide')){
-    //     mainTiles.classList.toggle('hide');
-    //     secondaryTiles.classList.toggle('show');
-    // } else {
-    //     mainTiles.classList.toggle('hide');
-    //     mainTiles.classList.toggle('show');
-    // }
-    // secondaryTiles.classList.toggle('hide');
-    // secondaryTiles.classList.toggle('show');
 }
-
 
 const mapStateToProps = (state) => {
     return {

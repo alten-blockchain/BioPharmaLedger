@@ -28,7 +28,7 @@ class Dashboard extends Component {
             {/*</Toolbar>*/}
           </AppBar>
         </Grid>
-        <Grid container>
+        <Grid className="clinlogix-container" container>
           {/*<AssetsList />*/}
           <ClinlogixLanding />
         </Grid>
