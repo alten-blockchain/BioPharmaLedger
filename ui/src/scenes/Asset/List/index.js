@@ -5,6 +5,7 @@ import { Button, Grid } from '@material-ui/core';
 import AssetsTable from './table';
 
 import { getAssets } from "../../../actions/asset.actions";
+import { apiUrl, HTTP_METHODS } from "../../../constants";
 import './list.css';
 import backArrow from './back-arrow.png';
 
@@ -23,6 +24,43 @@ class AssetsList extends Component {
       return parseInt(this.props.user['role'], 10) === USER_ROLE.ADMIN;
   }
 
+    setContent = event => {
+        this.setState({content: event.target.files[0]});
+    };
+
+    setMetadata = event => {
+        this.setState({metadata: event.target.value});
+    };
+
+    submitUpload = event => {
+        event.preventDefault();
+        let form = new FormData();
+        form.append('file', this.state.content);
+        form.append('metadata', this.state.metadata);
+        const content = this.state.content;
+        const exstorageURL = `${apiUrl}/exstorage`;
+        const type = this.state.fileType;
+        const metadata = this.state.metadata;
+        const file = {form, type, metadata};
+
+        fetch(exstorageURL, {
+            method: HTTP_METHODS.POST,
+            body: form
+        })
+            .then(function (response) {
+                return response.json()
+            })
+            .then(data => {
+                const responseString = JSON.stringify(data.data, null, 2);
+                this.setState({uploadResponse: responseString});
+                return data;
+            })
+            .catch(function (error) {
+                throw error;
+            });
+        alert('File uploaded successfully.');
+    }
+
   renderTable = () => {
     const { assets, user, USER_ROLE, ASSET_STATE } = this.props;
 
@@ -35,8 +73,6 @@ class AssetsList extends Component {
             <img src={backArrow} />
         </a>
     );
-
-
 
     return (
       <div className="dashboard-container">
@@ -76,7 +112,8 @@ class AssetsList extends Component {
                 <span>File(s):</span>
                 <div className="table-buttons">
                     <label className="choose-files">
-                        <input id="upload" type="file" />
+                        <input id="upload" type="file" onChange={this.setContent} />
+                        <input id="metadata" type="text" onChange={this.setMetadata} />
                         <Button className='select-button' onClick={selectFile}>
                             Select File
                         </Button>
@@ -84,7 +121,7 @@ class AssetsList extends Component {
                             <span id="fileName">-- choose a file to upload --</span>
                         </div>
                     </label>
-                    <Button className='upload-button' onClick={() => {}}>
+                    <Button className='upload-button' onClick={this.submitUpload}>
                         Upload
                     </Button>
                     <Button className='download-button' onClick={() => {}}>
@@ -126,6 +163,7 @@ function selectFile() {
             filename = filename.substring(0, 35) + "...";
         }
         document.getElementById("fileName").innerHTML = filename;
+        document.getElementById("metadata").value = filename;
     };
 }
 

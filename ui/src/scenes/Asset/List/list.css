@@ -145,8 +145,8 @@ tr th {
     position: absolute !important;
     right: 0;
 }
-input[type="file"] {
-    display: none;
+input[type="file"], input[type="text"] {
+    display: none !important;
 }
 .choose-files {
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;

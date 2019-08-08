@@ -129,6 +129,7 @@ class Exstorage extends Component {
         this.setState({metadata: event.target.value});
 
     };
+
     setContractAddress = event => {
     this.setState({contractAddress: event.target.value});
     };
