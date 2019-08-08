@@ -37,6 +37,10 @@ class AssetsList extends Component {
     };
 
     submitUpload = event => {
+        if (this.state == null) {
+            alert('ERROR: please choose a file to upload.');
+            return;
+        }
         event.preventDefault();
         let form = new FormData();
         form.append('file', this.state.content);
@@ -64,7 +68,6 @@ class AssetsList extends Component {
             });
         alert('File uploaded successfully.');
     }
-
 
   renderTable = () => {
     const { assets, user, USER_ROLE, ASSET_STATE } = this.props;
