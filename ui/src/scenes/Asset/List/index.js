@@ -38,7 +38,7 @@ class AssetsList extends Component {
 
     submitUpload = event => {
         if (this.state == null) {
-            alert('ERROR: please choose a file to upload.');
+            alert('ERROR: please select a file to upload.');
             return;
         }
         event.preventDefault();
@@ -67,6 +67,37 @@ class AssetsList extends Component {
                 throw error;
             });
         alert('File uploaded successfully.');
+    }
+
+    submitDownload = event => {
+        event.preventDefault();
+        if (this.state == null) {
+            alert('ERROR: please select a file to download.');
+            return;
+        }
+        const contractAddress = this.state.contractAddress;
+        const exstorageURL = `${apiUrl}/exstorage/${contractAddress}`;
+
+        const downloadArgs = {contractAddress};
+        fetch(exstorageURL, {
+            method: HTTP_METHODS.GET,
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (response) {
+                return response.json()
+            })
+            .then(data => {
+                const responseString = JSON.stringify(data.data, null, 2);
+                this.setState({downloadResponse: responseString});
+                window.open(data.data.url);
+                return data;
+            })
+            .catch(function (error) {
+                throw error;
+            });
     }
 
   renderTable = () => {
@@ -156,6 +187,8 @@ class AssetsList extends Component {
 }
 
 function selectFile() {
+    document.getElementById("contract").value = "91fc76b137abe24b5948234c53f6abaab649ae76";
+    document.getElementById("contract").click();
     var input = document.getElementById('upload');
     input.click();
     input.onchange = function() {
