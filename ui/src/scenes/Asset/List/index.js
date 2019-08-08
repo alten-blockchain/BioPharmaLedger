@@ -32,6 +32,10 @@ class AssetsList extends Component {
         this.setState({metadata: event.target.value});
     };
 
+    setContractAddress = event => {
+        this.setState({contractAddress: event.target.value});
+    };
+
     submitUpload = event => {
         event.preventDefault();
         let form = new FormData();
@@ -60,6 +64,7 @@ class AssetsList extends Component {
             });
         alert('File uploaded successfully.');
     }
+
 
   renderTable = () => {
     const { assets, user, USER_ROLE, ASSET_STATE } = this.props;
@@ -113,7 +118,8 @@ class AssetsList extends Component {
                 <div className="table-buttons">
                     <label className="choose-files">
                         <input id="upload" type="file" onChange={this.setContent} />
-                        <input id="metadata" type="text" onChange={this.setMetadata} />
+                        <input id="metadata" type="text" onClick={this.setMetadata} />
+                        <input id="contract" type="text" onClick={this.setContractAddress} />
                         <Button className='select-button' onClick={selectFile}>
                             Select File
                         </Button>
@@ -124,7 +130,7 @@ class AssetsList extends Component {
                     <Button className='upload-button' onClick={this.submitUpload}>
                         Upload
                     </Button>
-                    <Button className='download-button' onClick={() => {}}>
+                    <Button className='download-button' onClick={this.submitDownload}>
                         Download Selected Files
                     </Button>
                 </div>
@@ -164,6 +170,7 @@ function selectFile() {
         }
         document.getElementById("fileName").innerHTML = filename;
         document.getElementById("metadata").value = filename;
+        document.getElementById("metadata").click();
     };
 }
 
