@@ -145,7 +145,7 @@ tr th {
     position: absolute !important;
     right: 0;
 }
-input[type="file"], input[type="text"] {
+.table-buttons input[type="file"], .table-buttons input[type="text"] {
     display: none !important;
 }
 .choose-files {

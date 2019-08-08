@@ -77,7 +77,7 @@ class AssetsList extends Component {
         }
         const contractAddress = this.state.contractAddress;
         const exstorageURL = `${apiUrl}/exstorage/${contractAddress}`;
-
+        alert('exstorageURL: ' + exstorageURL);
         const downloadArgs = {contractAddress};
         fetch(exstorageURL, {
             method: HTTP_METHODS.GET,
