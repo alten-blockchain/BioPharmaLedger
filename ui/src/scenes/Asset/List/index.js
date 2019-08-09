@@ -77,7 +77,7 @@ class AssetsList extends Component {
         }
         const contractAddress = this.state.contractAddress;
         const exstorageURL = `${apiUrl}/exstorage/${contractAddress}`;
-        alert('exstorageURL: ' + exstorageURL);
+
         const downloadArgs = {contractAddress};
         fetch(exstorageURL, {
             method: HTTP_METHODS.GET,
@@ -106,6 +106,15 @@ class AssetsList extends Component {
     // Filter assets
     const ownedAssets = assets.filter((asset) => asset.owner === user.account);
     const requestedAssets = assets.filter((asset) => parseInt(asset.assetState, 10) === ASSET_STATE.BIDS_REQUESTED);
+
+    var checkboxs = document.getElementsByClassName("table-check-box");
+    for (var i=0; i < checkboxs.length; i++) {
+      checkboxs[i].onclick = function(){
+          this.parentNode.parentNode.classList.toggle('selected-row');
+          document.getElementById("contract").value = this.getElementsByTagName("input")[0].getAttribute('data-contractid');
+          document.getElementById("contract").click();
+      }
+    };
 
     var backButton = (
         <a onClick={showHideOptions} className="back-arrow">
@@ -187,8 +196,6 @@ class AssetsList extends Component {
 }
 
 function selectFile() {
-    document.getElementById("contract").value = "91fc76b137abe24b5948234c53f6abaab649ae76";
-    document.getElementById("contract").click();
     var input = document.getElementById('upload');
     input.click();
     input.onchange = function() {
