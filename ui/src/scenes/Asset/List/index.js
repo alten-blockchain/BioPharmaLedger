@@ -14,7 +14,6 @@ class AssetsList extends Component {
 
   componentDidMount() {
     this.props.getAssets();
-    this.setState({json: 'test'});
   }
 
   redirectToAssetDetail = (event, sku) => {
@@ -122,19 +121,19 @@ class AssetsList extends Component {
       return;
     }
 
-    //populate sponsers
-    var sponsers = [], sponsersHTML = [];
+    //populate sponsors
+    var sponsors = [], sponsorsHTML = [];
     for (var x = 0; x < filters.filter.length; x++) {
-        var sponser = filters.filter[x].Sponsor;
+        var sponsor = filters.filter[x].Sponsor;
         var study =  filters.filter[x].Study;
-        var html = (<option value={sponser}>{sponser}</option>);
-        if (!inArray(sponser, sponsers)){
-            sponsers.push([sponser, []]);
-            sponsersHTML.push(html);
+        var html = (<option value={sponsor}>{sponsor}</option>);
+        if (!inArray(sponsor, sponsors)){
+            sponsors.push([sponsor, []]);
+            sponsorsHTML.push(html);
         }
-        for (var i = 0; i < sponsers.length; i++) {
-            if (sponsers[i][0] === sponser) {
-                if (!inSubArray(study, sponsers[i][1])) sponsers[i][1].push(study);
+        for (var i = 0; i < sponsors.length; i++) {
+            if (sponsors[i][0] === sponsor) {
+                if (!inSubArray(study, sponsors[i][1])) sponsors[i][1].push(study);
             }
         }
     }
@@ -165,15 +164,6 @@ class AssetsList extends Component {
       }
     }
 
-    var checkboxs = document.getElementsByClassName("table-check-box");
-    for (var i=0; i < checkboxs.length; i++) {
-      checkboxs[i].onclick = function(){
-          this.parentNode.parentNode.classList.toggle('selected-row');
-          document.getElementById("contract").value = this.getElementsByTagName("input")[0].getAttribute('data-contractid');
-          document.getElementById("contract").click();
-      }
-    };
-
     var backButton = (
         <a onClick={showHideOptions} className="back-arrow">
             <img src={backArrow} />
@@ -186,18 +176,18 @@ class AssetsList extends Component {
         <div className="table-top-info">
             {this.isAdmin && backButton}
             <div className="drop-downs">
-                <span>Sponser:</span>
-                <select id="sponser" data-dropdown="sponser" onChange={() => selectSponser(sponsers, document.getElementById('sponser').value)}>
-                    <option hidden disabled selected> -- select a sponser -- </option>
-                    {sponsersHTML}
+                <span>Sponsor:</span>
+                <select id="sponsor" data-dropdown="sponsor" onChange={() => selectSponsor(sponsors, document.getElementById('sponsor').value)}>
+                    <option hidden disabled selected>-- select sponsor --</option>
+                    {sponsorsHTML}
                 </select>
                 <span>Study:</span>
                 <select id="study" data-dropdown="study" onChange={() => selectStudy(studies, document.getElementById('study').value)} disabled>
-                    <option hidden disabled selected> -- select a study -- </option>
+                    <option hidden disabled selected>-- select study --</option>
                 </select>
                 <span>Organization:</span>
                 <select id="organization" data-dropdown="organization" disabled>
-                    <option hidden disabled selected> -- select an organization -- </option>
+                    <option hidden disabled selected>-- select organization --</option>
                 </select>
                 <span>Category:</span>
                 <select id="category" data-dropdown="category">
@@ -249,11 +239,11 @@ class AssetsList extends Component {
   }
 }
 
-function selectSponser(array, sponser){
+function selectSponsor(array, sponsor){
     var html = [];
-    html.push(<option hidden disabled selected> -- select a study -- </option>);
+    html.push(<option hidden disabled selected>-- select study --</option>);
     for (var i = 0; i < array.length; i++) {
-        if (array[i][0] === sponser) {
+        if (array[i][0] === sponsor) {
             for (var x = 0; x < array[i][1].length; x++) {
                 html.push(<option value={array[i][1][x]}>{array[i][1][x]}</option>);
             }
@@ -272,7 +262,7 @@ function selectSponser(array, sponser){
 
 function selectStudy(array, study){
     var html = [];
-    html.push(<option hidden disabled selected> -- select an organization -- </option>);
+    html.push(<option hidden disabled selected>-- select organization --</option>);
     for (var i = 0; i < array.length; i++) {
         if (array[i][0] === study) {
             for (var x = 0; x < array[i][1].length; x++) {
@@ -316,15 +306,6 @@ function selectFile() {
             filename = filename.substring(0, 35) + "...";
         }
         document.getElementById("fileName").innerHTML = filename;
-
-        var metadata = '{"sponser":"' + document.getElementById('sponser').value + '",'
-            + '"study":"' + document.getElementById('study').value + '",'
-            + '"organization":"' + document.getElementById('organization').value + '",'
-            + '"category":"' + document.getElementById('category').value + '",'
-            + '"access":"' + document.getElementById('access').value + '"}';
-
-        document.getElementById("metadata").value = metadata;
-        document.getElementById("metadata").click();
     };
 }
 

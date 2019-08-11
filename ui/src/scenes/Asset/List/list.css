@@ -9,10 +9,14 @@
 
 .assets-table {
   min-width: 700px;
-    border-radius: 4px !important;
+  border-radius: 4px !important;
 }
 
-.assets-table-body tr:hover {
+#assets-table-body {
+    font-size: 0.8125rem;
+}
+
+#assets-table-body tr:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.1);
 }
