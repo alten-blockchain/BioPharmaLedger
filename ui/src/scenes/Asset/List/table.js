@@ -99,44 +99,46 @@ class AssetsTable extends Component {
 }
 
 function filterTable() {
-    var html = [];
-    for (var x = 0; x < tableData.length; x++) {
-        if ((tableData[x][0] === document.getElementById('sponsor').value || document.getElementById('sponsor').value === '-- select sponsor --') &&
-            (tableData[x][1] === document.getElementById('study').value || document.getElementById('study').value === '-- select study --') &&
-            (tableData[x][8] === document.getElementById('organization').value || document.getElementById('organization').value === '-- select organization --') &&
-            (tableData[x][3] === document.getElementById('category').value || document.getElementById('category').value === '-- select category --') &&
-            (tableData[x][4] === document.getElementById('access').value || document.getElementById('access').value === '-- select access type --')) {
-            html.push(
-                <TableRow>
-                    <TableCell align="left">
-                        <Checkbox
-                            value=""
-                            className="table-check-box"
-                            inputProps={{ 'data-contractid': tableData[x][2]}}
-                        />
-                    </TableCell>
-                    <TableCell align="left">{tableData[x][3]}</TableCell>
-                    <TableCell align="left">{tableData[x][4]}</TableCell>
-                    <TableCell align="left">{tableData[x][5]}</TableCell>
-                    <TableCell align="left">{tableData[x][6]}</TableCell>
-                    <TableCell align="left">{tableData[x][7]}</TableCell>
-                    <TableCell align="left">{tableData[x][8]}</TableCell>
-                    <TableCell align="left">{tableData[x][9]}</TableCell>
-                    <TableCell align="left">
-                        {(tableData[x][10] === 'X') ? <img className="checkmark" src={checkmark} /> : ""}
-                    </TableCell>
-                </TableRow>
-            );
+    setTimeout(function(){
+        var html = [];
+        for (var x = 0; x < tableData.length; x++) {
+            if ((tableData[x][0] === document.getElementById('sponsor').value || document.getElementById('sponsor').value === '-- select sponsor --') &&
+                (tableData[x][1] === document.getElementById('study').value || document.getElementById('study').value === '-- select study --') &&
+                (tableData[x][8] === document.getElementById('organization').value || document.getElementById('organization').value === '-- select organization --') &&
+                (tableData[x][3] === document.getElementById('category').value || document.getElementById('category').value === '-- select category --') &&
+                (tableData[x][4] === document.getElementById('access').value || document.getElementById('access').value === '-- select access type --')) {
+                html.push(
+                    <TableRow>
+                        <TableCell align="left">
+                            <Checkbox
+                                value=""
+                                className="table-check-box"
+                                inputProps={{ 'data-contractid': tableData[x][2]}}
+                            />
+                        </TableCell>
+                        <TableCell align="left">{tableData[x][3]}</TableCell>
+                        <TableCell align="left">{tableData[x][4]}</TableCell>
+                        <TableCell align="left">{tableData[x][5]}</TableCell>
+                        <TableCell align="left">{tableData[x][6]}</TableCell>
+                        <TableCell align="left">{tableData[x][7]}</TableCell>
+                        <TableCell align="left">{tableData[x][8]}</TableCell>
+                        <TableCell align="left">{tableData[x][9]}</TableCell>
+                        <TableCell align="left">
+                            {(tableData[x][10] === 'X') ? <img className="checkmark" src={checkmark} /> : ""}
+                        </TableCell>
+                    </TableRow>
+                );
+            }
         }
-    }
-    if (html.length > 0){
-        ReactDOM.render(html, document.getElementById('assets-table-body'));
-    } else {
-        ReactDOM.render(<TableRow>
-            <TableCell colSpan={9} align="center"> No Matching Files Found </TableCell>
-        </TableRow>, document.getElementById('assets-table-body'));
-    }
-    rowsRendered();
+        if (html.length > 0){
+            ReactDOM.render(html, document.getElementById('assets-table-body'));
+        } else {
+            ReactDOM.render(<TableRow>
+                <TableCell colSpan={9} align="center"> No Matching Files Found </TableCell>
+            </TableRow>, document.getElementById('assets-table-body'));
+        }
+        rowsRendered();
+    }, 50);
 }
 
 function rowsRendered() {

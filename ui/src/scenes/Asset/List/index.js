@@ -111,12 +111,12 @@ class AssetsList extends Component {
     const requestedAssets = assets.filter((asset) => parseInt(asset.assetState, 10) === ASSET_STATE.BIDS_REQUESTED);
 
     var json = '{"filter":[{"Sponsor":"CSL Behring","Study":"Hemophilia B Clinical Trial","Organization":"University of Colorado"},' +
-      '{"Sponsor":"CSL Behring","Study":" Hemophilia B Clinical Trial ","Organization":"Hospital Vall Hebron"},' +
-      '{"Sponsor":"CSL Behring","Study":" Hemophilia B Clinical Trial ","Organization":"CoreLab of PA"},' +
+      '{"Sponsor":"CSL Behring","Study":"Hemophilia B Clinical Trial","Organization":"Hospital Vall Hebron"},' +
+      '{"Sponsor":"CSL Behring","Study":"Hemophilia B Clinical Trial","Organization":"CoreLab of PA"},' +
       '{"Sponsor":"CSL Behring","Study":"Glocuse B Clinical Trial","Organization":"University of Colorado"},' +
-      '{"Sponsor":"CSL Behring","Study":" Glocuse B Clinical Trial ","Organization":"Hospital Vall Hebron"},' +
-      '{"Sponsor":"CSL Behring","Study":" Glocuse B Clinical Trial ","Organization":"CoreLab of PA"},' +
-      '{"Sponsor":"CSL Behring","Study":" Glocuse B Clinical Trial ","Organization":"Royal Adelaide Hospital"},' +
+      '{"Sponsor":"CSL Behring","Study":"Glocuse B Clinical Trial","Organization":"Hospital Vall Hebron"},' +
+      '{"Sponsor":"CSL Behring","Study":"Glocuse B Clinical Trial","Organization":"CoreLab of PA"},' +
+      '{"Sponsor":"CSL Behring","Study":"Glocuse B Clinical Trial","Organization":"Royal Adelaide Hospital"},' +
       '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial","Organization":"Royal Adelaide Hospital"},' +
       '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial","Organization":"CoreLab of PA"},' +
       '{"Sponsor":"Merck","Study":"Acute Oncology Clinical Trial","Organization":"CoreLab of NY"},' +
