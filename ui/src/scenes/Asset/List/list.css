@@ -126,26 +126,26 @@ tr th {
 .table-buttons {
     width: 100%;
 }
-.upload-button, .download-button, .select-button {
+#upload-button, #download-button, .select-button {
     padding: 6px 20px !important;
     vertical-align: top;
     height: 35px;
 }
-.upload-button, .download-button  {
+#upload-button, #download-button  {
     background-color: #81c251 !important;
 }
 .select-button {
     background-color: #888888 !important;
     color: white !important;
 }
-.upload-button:hover, .download-button:hover, .select-button:hover {
+#upload-button:hover, #download-button:hover, .select-button:hover {
     background-color: rgba(129, 194, 81, 0.5) !important;
 }
-.upload-button span, .download-button span, .select-button span {
+#upload-button span, #download-button span, .select-button span {
     margin: 0;
     width: auto;
 }
-.download-button {
+#download-button {
     position: absolute !important;
     right: 0;
 }

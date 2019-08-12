@@ -62,12 +62,14 @@ class AssetsList extends Component {
             .then(data => {
                 const responseString = JSON.stringify(data.data, null, 2);
                 this.setState({uploadResponse: responseString});
+                alert('File uploaded successfully.');
+                document.getElementById('upload').innerHTML = '';
+                document.getElementById("fileName").innerHTML = '-- choose a file to upload --';
                 return data;
             })
             .catch(function (error) {
                 throw error;
             });
-        alert('File uploaded successfully.');
     }
 
     submitDownload = event => {
@@ -109,11 +111,23 @@ class AssetsList extends Component {
     const requestedAssets = assets.filter((asset) => parseInt(asset.assetState, 10) === ASSET_STATE.BIDS_REQUESTED);
 
     var json = '{"filter":[{"Sponsor":"CSL Behring","Study":"Hemophilia B Clinical Trial","Organization":"University of Colorado"},' +
-        '{"Sponsor":"CSL Behring","Study":"Hemophilia A Clinical Trial","Organization":"Hospital Vall Hebron"},' +
-        '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial","Organization":"Royal Adelaide Hospital"},' +
-        '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial 2","Organization":"Hospital Cardiológica Aguascal"},' +
-        '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial 3","Organization":"Emek Medical Center"},' +
-        '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial","Organization":"CoreLab of PA"}]}';
+      '{"Sponsor":"CSL Behring","Study":" Hemophilia B Clinical Trial ","Organization":"Hospital Vall Hebron"},' +
+      '{"Sponsor":"CSL Behring","Study":" Hemophilia B Clinical Trial ","Organization":"CoreLab of PA"},' +
+      '{"Sponsor":"CSL Behring","Study":"Glocuse B Clinical Trial","Organization":"University of Colorado"},' +
+      '{"Sponsor":"CSL Behring","Study":" Glocuse B Clinical Trial ","Organization":"Hospital Vall Hebron"},' +
+      '{"Sponsor":"CSL Behring","Study":" Glocuse B Clinical Trial ","Organization":"CoreLab of PA"},' +
+      '{"Sponsor":"CSL Behring","Study":" Glocuse B Clinical Trial ","Organization":"Royal Adelaide Hospital"},' +
+      '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial","Organization":"Royal Adelaide Hospital"},' +
+      '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial","Organization":"CoreLab of PA"},' +
+      '{"Sponsor":"Merck","Study":"Acute Oncology Clinical Trial","Organization":"CoreLab of NY"},' +
+      '{"Sponsor":"Merck","Study":"Acute Oncology Clinical Trial","Organization":"Hospital Cardiol—gica Aguascal"},' +
+      '{"Sponsor":"Merck","Study":"Acute Oncology Clinical Trial","Organization":"Royal Adelaide Hospital"},' +
+      '{"Sponsor":"Merck","Study":"Acute Diabetes Syndrome Clinical Trial","Organization":"CoreLab of PA"},' +
+      '{"Sponsor":"Merck","Study":"Acute Diabetes Syndrome Clinical Trial","Organization":"Royal Adelaide Hospital"},' +
+      '{"Sponsor":"Merck","Study":"Acute Diabetes Syndrome Clinical Trial","Organization":"Emek Medical Center"},' +
+      '{"Sponsor":"Merck","Study":"Acute Glocuse Syndrome Clinical Trial","Organization":"CoreLab of PA"}, ' +
+      '{"Sponsor":"Merck","Study":"Acute Glocuse Syndrome Clinical Trial","Organization":"Hospital Vall Hebron"}, ' +
+      '{"Sponsor":"Merck","Study":"Acute Glocuse Syndrome Clinical Trial","Organization":"CoreLab of NY"}]}';
     try {
       var filters = JSON.parse(json);
     } catch (e) {
@@ -214,10 +228,10 @@ class AssetsList extends Component {
                             <span id="fileName">-- choose a file to upload --</span>
                         </div>
                     </label>
-                    <Button className='upload-button' onClick={this.submitUpload}>
+                    <Button id='upload-button' onClick={this.submitUpload}>
                         Upload
                     </Button>
-                    <Button className='download-button' onClick={this.submitDownload}>
+                    <Button id='download-button' onClick={this.submitDownload}>
                         Download Selected Files
                     </Button>
                 </div>

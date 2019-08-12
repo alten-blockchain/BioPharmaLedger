@@ -31,18 +31,18 @@ class Clinlogix extends Component {
                         </div>
                         <div className="data-tile-wrapper">
                             <a className="data-tile tile-type2">
-                                {/*<h1>Management Dashboard</h1>*/}
-                                {/*<h2>Setup and Configuration of Studies, Orgs, and Users</h2>*/}
-                                <h1>Option 2</h1>
-                                <h2>Management and operation of study files</h2>
+                                <h1>Management Dashboard</h1>
+                                <h2>Management and operation of BioPharma Ledger System</h2>
+                                {/*<h1>Option 2</h1>*/}
+                                {/*<h2>Management and operation of study files</h2>*/}
                             </a>
                         </div>
                         <div className="data-tile-wrapper">
                             <a className="data-tile tile-type3">
-                                {/*<h1>Compliance Dashboard</h1>*/}
-                                {/*<h2>Blockchain Ledger dashboard for compliance</h2>*/}
-                                <h1>Option 3</h1>
-                                <h2>Management and operation of study files</h2>
+                                <h1>Compliance Dashboard</h1>
+                                <h2>Compliance and monitoring of Blockchain Ledger</h2>
+                                {/*<h1>Option 3</h1>*/}
+                                {/*<h2>Management and operation of study files</h2>*/}
                             </a>
                         </div>
                     </div>

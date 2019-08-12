@@ -30,6 +30,12 @@ class AssetsTable extends Component {
       document.getElementById('category').onchange = function() { filterTable(); }
       document.getElementById('access').onchange = function() { filterTable(); }
       rowsRendered();
+      document.getElementById('upload-button').onclick = function() {
+          addUploadRow();
+      }
+      document.getElementById('download-button').onclick = function() {
+          updateDownloadedRow();
+      }
   }
 
   renderRows = (assets) => {
@@ -144,11 +150,56 @@ function rowsRendered() {
     };
 }
 
-var json = '{"files":[{"Sponsor":"CSL Behring","Study":"Hemophilia B Clinical Trial","ExternalStorageAddress":"654910fe5bec44d5d89146c534ab996a4f405e72","Category":"Demographics","Access":"Open","FileName": "Demographic Baseline.xls","DateTime": "8/1/2019 08:00","UploadedBy": "Paul Elisii","UploadedTo": "University of Colorado","AcceptedBy": "Bill Barber","Verified": "X"}, ' +
-    '{"Sponsor":"CSL Behring","Study":"Hemophilia A Clinical Trial","ExternalStorageAddress":"654910fe5bec44d5d89146c534ab996a4f405e72","Category":"Demographics","Access":"Open","FileName": "Demographic Group 1.xls","DateTime": "8/1/2019 08:00","UploadedBy": "Paul Elisii","UploadedTo": "NY Hospital","AcceptedBy": "","Verified": ""}, ' +
-    '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial","ExternalStorageAddress":"654910fe5bec44d5d89146c534ab996a4f405e72","Category":"Results","Access":"Blinded","FileName": "Test 1 Results.xls","DateTime": "8/6/2019 08:45","UploadedBy": "Jim Smith","UploadedTo": "Clinlogix","AcceptedBy": "Paul Elisii","Verified": "X"},' +
-    '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial 2","ExternalStorageAddress":"654910fe5bec44d5d89146c534ab996a4f405e72","Category":"Results","Access":"Blinded","FileName": "Test 2 Results.xls","DateTime": "8/5/2019 13:31","UploadedBy": "Sam Templeton","UploadedTo": "Clinlogix","AcceptedBy": "Paul Elisii","Verified": "X"},' +
-    '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial","ExternalStorageAddress":"654910fe5bec44d5d89146c534ab996a4f405e72","Category":"Demographics","Access":"Blinded","FileName": "Test 3 Results.xls","DateTime": "8/7/2019 05:12","UploadedBy": "John Doe","UploadedTo": "CoreLab of PA","AcceptedBy": "","Verified": ""}]}';
+function addUploadRow() {
+    var currentdate = new Date();
+    var datetime = currentdate.getMonth()+1 + "/"
+        + (currentdate.getDate())  + "/"
+        + currentdate.getFullYear() + ' '
+        + currentdate.getHours() + ":"
+        + currentdate.getMinutes();
+    if (document.getElementById('fileName').innerHTML == '-- choose a file to upload --') { return; }
+    var sponser, study, category, access, datetime, organization = '';
+    if (document.getElementById('sponsor').value != '-- select sponsor --') { sponser = document.getElementById('sponsor').value; }
+    if (document.getElementById('study').value != '-- select study --') { study = document.getElementById('study').value; }
+    if (document.getElementById('organization').value != '-- select organization --') { organization = document.getElementById('organization').value; }
+    if (document.getElementById('category').value != '-- select category --') { category = document.getElementById('category').value; }
+    if (document.getElementById('access').value != '-- select access type --') { access = document.getElementById('access').value; }
+
+    tableData.push([sponser, study, '1484c87e5ab203edfdd1ece0f3bf15fdc35eb8dc', category, access, document.getElementById('fileName').innerHTML, datetime, 'Paul Elisii', organization, '', '']);
+    setTimeout(function(){
+        filterTable();
+    }, 2000);
+}
+
+function updateDownloadedRow() {
+    if (document.getElementById("contract").value.length < 1) { return; }
+    for (var x = 0; x < tableData.length; x++) {
+        if (tableData[x][2] === document.getElementById("contract").value) {
+            if (tableData[x][9] === '') {
+                tableData[x][9] = 'Paul Elisii';
+            }
+            if (tableData[x][10] === '') {
+                tableData[x][10] = 'X';
+            }
+            setTimeout(function(){
+                filterTable();
+            }, 1000);
+            return;
+        }
+    }
+}
+
+var json = '{"files":[ {"Sponsor":"CSL Behring","Study":"Hemophilia B Clinical Trial","ExternalStorageAddress":"654910fe5bec44d5d89146c534ab996a4f405e72","Category":"Demographics","Access":"Open","FileName": "Demographic Baseline.xls","DateTime": "8/1/2019 08:00","UploadedBy": "Paul Elisii","UploadedTo": "University of Colorado","AcceptedBy": "","Verified": ""}, ' +
+    '{"Sponsor":"CSL Behring","Study":"Hemophilia A Clinical Trial","ExternalStorageAddress":"654910fe5bec44d5d89146c534ab996a4f405e72","Category":"Demographics","Access":"Open","FileName": "Demographic Group 44.xls","DateTime": "8/1/2019 08:00","UploadedBy": "Paul Elisii","UploadedTo": "NY Hospital","AcceptedBy": "Bill Barber","Verified": "X"}, ' +
+    '{"Sponsor":"CSL Behring","Study":"Hemophilia A Clinical Trial","ExternalStorageAddress":"654910fe5bec44d5d89146c534ab996a4f405e72","Category":"Demographics","Access":"Open","FileName": "Demographic Group 133.xls","DateTime": "8/1/2019 08:00","UploadedBy": "Paul Elisii","UploadedTo": "NY Hospital","AcceptedBy": "Paul Elisii","Verified": "X"}, ' +
+    '{"Sponsor":"CSL Behring","Study":"Hemophilia A Clinical Trial","ExternalStorageAddress":"654910fe5bec44d5d89146c534ab996a4f405e72","Category":"Demographics","Access":"Open","FileName": "Demographic Group 12.xls","DateTime": "8/1/2019 08:00","UploadedBy": "Paul Elisii","UploadedTo": "NY Hospital","AcceptedBy": "Jim Smith","Verified": "X"}, ' +
+    '{"Sponsor":"CSL Behring","Study":"Hemophilia A Clinical Trial","ExternalStorageAddress":"654910fe5bec44d5d89146c534ab996a4f405e72","Category":"Demographics","Access":"Open","FileName": "Demographic Group 11.xls","DateTime": "8/1/2019 08:00","UploadedBy": "Paul Elisii","UploadedTo": "NY Hospital","AcceptedBy": "Bill Barber","Verified": "X"}, ' +
+    '{"Sponsor":"Merck","Study":"Acute Diabetes Syndrome Clinical Trial","ExternalStorageAddress":"1484c87e5ab203edfdd1ece0f3bf15fdc35eb8dc","Category":"Results","Access":"Blinded","FileName": "Test 1 Results.xls","DateTime": "8/6/2019 08:45","UploadedBy": "Jim Smith","UploadedTo": "Clinlogix","AcceptedBy": "","Verified": ""},' +
+    '{"Sponsor":"Merck","Study":"Acute Diabetes Syndrome Clinical Trial","ExternalStorageAddress":"654910fe5bec44d5d89146c534ab996a4f405e72","Category":"Results","Access":"Blinded","FileName": "Test 21 Results.xls","DateTime": "8/5/2019 13:31","UploadedBy": "Sam Templeton","UploadedTo": "Clinlogix","AcceptedBy": "Paul Elisii","Verified": "X"},' +
+    '{"Sponsor":"Merck","Study":"Acute Oncology Clinical Trial","ExternalStorageAddress":"1484c87e5ab203edfdd1ece0f3bf15fdc35eb8dc","Category":"Demographics","Access":"Blinded","FileName": "Test 31 Results.xls","DateTime": "8/7/2019 05:12","UploadedBy": "John Doe","UploadedTo": "CoreLab of PA","AcceptedBy": "Bill Barber","Verified": "X"}, ' +
+    '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial","ExternalStorageAddress":"1484c87e5ab203edfdd1ece0f3bf15fdc35eb8dc","Category":"Demographics","Access":"Blinded","FileName": "Test 322 Results.xls","DateTime": "8/7/2019 05:12","UploadedBy": "John Doe","UploadedTo": "CoreLab of PA","AcceptedBy": "Paul Elisii","Verified": "X"}, '  +
+    '{"Sponsor":"Merck","Study":"Acute Glocuse Syndrome Clinical Trial","ExternalStorageAddress":"1484c87e5ab203edfdd1ece0f3bf15fdc35eb8dc","Category":"Demographics","Access":"Blinded","FileName": "Test 4 Results.xls","DateTime": "8/7/2019 05:12","UploadedBy": "John Doe","UploadedTo": "CoreLab of PA","AcceptedBy": "Jim Smith","Verified": "X"}, '  +
+    '{"Sponsor":"Merck","Study":"Acute Glocuse Syndrome Clinical Trial","ExternalStorageAddress":"1484c87e5ab203edfdd1ece0f3bf15fdc35eb8dc","Category":"Demographics","Access":"Blinded","FileName": "Test 5 Results.xls","DateTime": "8/7/2019 05:12","UploadedBy": "John Doe","UploadedTo": "CoreLab of NY","AcceptedBy": "Bill Barber","Verified": "X"}]}';
 
 var tableContent = [];
 var tableData = [];  //to store the data associated with each file and used for filtering the table later
