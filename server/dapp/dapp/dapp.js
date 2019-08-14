@@ -4,13 +4,14 @@ import config from '../../load.config';
 import * as userManagerJs from '../../blockapps-sol/dist/auth/user/userManager';
 import assetManagerJs from '../asset/assetManager';
 import studyManagerJs from '../study/studyManager';
+import fileTransactionManagerJs from '../fileTransaction/fileTransactionManager';
 import ttPermissionManagerJs from '../ttPermission/ttPermissionManager';
 import exstorageJs from '../exstorage/exstorage';
 import { yamlWrite } from "../../helpers/config";
 
 const contractName = 'TtDapp';
 const contractFilename = `${config.dappPath}/dapp/contracts/ttDapp.sol`;
-const managersNames = ['userManager', 'assetManager', 'ttPermissionManager', 'studyManager'];
+const managersNames = ['userManager', 'assetManager', 'ttPermissionManager', 'studyManager', 'fileTransactionManager'];
 
 const options = { config }
 
@@ -52,6 +53,7 @@ async function bind(token, _contract) {
   const userManager = userManagerJs.bind(token, unboundManagers.userManager);
   const assetManager = assetManagerJs.bind(token, unboundManagers.assetManager);
   const studyManager = studyManagerJs.bind(token, unboundManagers.studyManager);
+  const fileTransactionManager = fileTransactionManagerJs.bind(token, unboundManagers.fileTransactionManager);
   const ttPermissionManager = ttPermissionManagerJs.bind(token, unboundManagers.ttPermissionManager);
 
   // deploy
@@ -60,6 +62,7 @@ async function bind(token, _contract) {
       userManager,
       assetManager,
       studyManager,
+      fileTransactionManager,
       ttPermissionManager,
     }
     return await deploy(token, contract, deployFilename, managers)
@@ -104,6 +107,10 @@ async function bind(token, _contract) {
 
   contract.createStudy = async function (args) {
     return await studyManager.createStudy(args);
+  }
+
+  contract.createFileTransaction = async function (args) {
+    return await fileTransactionManager.createFileTransaction(args);
   }
 
   contract.transferOwnership = async function (args) {
@@ -154,7 +161,8 @@ async function deploy(token, contract, deployFilename, managers) {
   // write
   if (config.apiDebug) {
     console.log('deploy filename:', deployFilename);
-    console.log(yamlSafeDumpSync(deployment));
+    //console.log(yamlSafeDumpSync(deployment));
+    console.log(deployment);
   }
 
   yamlWrite(deployment, deployFilename);
