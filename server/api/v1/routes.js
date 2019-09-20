@@ -11,6 +11,7 @@ import assets from './assets';
 import bids from './bids';
 import constants from './constants';
 import exstorage from './exstorage';
+import fileTransactions from './fileTransactions';
 
 router.use(
   `/authentication`,
@@ -22,6 +23,12 @@ router.use(
   authHandler.authorizeRequest(),
   user
 )
+
+router.use(
+  `/fileTransactions`,
+  authHandler.authorizeRequest(),
+  fileTransactions
+);
 
 router.use(
   `/assets`,

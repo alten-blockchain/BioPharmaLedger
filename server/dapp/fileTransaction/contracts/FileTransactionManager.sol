@@ -1,6 +1,6 @@
 import "/blockapps-sol/dist/collections/hashmap/contracts/Hashmap.sol";
 import "/blockapps-sol/dist/rest/contracts/RestStatus.sol";
-import "./FileTransaction.sol";
+import "./FileTransactionV10.sol";
 
  contract FileTransactionManager is RestStatus {
     Hashmap fileTransactions;
@@ -10,29 +10,31 @@ import "./FileTransaction.sol";
         fileTransactions = new Hashmap();
     }
 
-     function createFileTransaction(
+    function createFileTransaction(
         string _fileTransactionId,
         string _externalStorageAddress,
         string _category,
         string _access,
-        string _fileName
+        string _fileName,
+        string _actionType
     ) public returns (uint, uint, address) {
         // exists ?
         if (exists(_fileTransactionId)) return (RestStatus.BAD_REQUEST, 0, 0);
         // create new
-        FileTransaction fileTransaction = new FileTransaction(
+        FileTransactionV10 fileTransaction = new FileTransactionV10(
             _fileTransactionId,
             _externalStorageAddress,
             _category,
             _access,
-            _fileName
+            _fileName,
+            _actionType
         );
         fileTransactions.put(_fileTransactionId, fileTransaction);
         // created
         return (RestStatus.CREATED, 0, fileTransaction);
     }
 
-     function setDetails(
+    function setDetails(
         string _fileTransactionId,
         string _dateTime,
         string _uploadedBy,
@@ -43,7 +45,7 @@ import "./FileTransaction.sol";
         // exists ?
         if (!exists(_fileTransactionId)) return (RestStatus.NOT_FOUND, 0, 0);
         // get the contract
-        FileTransaction fileTransaction = FileTransaction(fileTransactions.get(_fileTransactionId));
+        FileTransactionV10 fileTransaction = FileTransactionV10(fileTransactions.get(_fileTransactionId));
         // set details
         fileTransaction.setDetails(
             _dateTime,
@@ -54,7 +56,13 @@ import "./FileTransaction.sol";
         return (RestStatus.OK, 0, fileTransaction);
     }
 
-     function exists(string _fileTransactionId) public view returns (bool) {
+    function exists(string _fileTransactionId) public view returns (bool) {
         return fileTransactions.contains(_fileTransactionId);
     }
+
+
+    function getFileTransaction(string _fileTransactionId) public view returns (address) {
+      return fileTransactions.get(_fileTransactionId);
+    }
+
 }

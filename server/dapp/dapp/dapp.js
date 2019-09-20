@@ -109,6 +109,18 @@ async function bind(token, _contract) {
     return await studyManager.createStudy(args);
   }
 
+  contract.getFileTransactions = async function (args) {
+    return await fileTransactionManager.getFileTransactions(args);
+  }
+
+  contract.getFileTransaction  = async function (fileTransactionId) {
+    return await fileTransactionManager.getFileTransaction(fileTransactionId);
+  }
+
+  contract.getFileTransactionHistory = async function (fileTransactionId) {
+    return await fileTransactionManager.getFileTransactionHistory(fileTransactionId);
+  }
+
   contract.createFileTransaction = async function (args) {
     return await fileTransactionManager.createFileTransaction(args);
   }

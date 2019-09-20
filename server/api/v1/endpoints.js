@@ -21,9 +21,15 @@ const Exstorage = {
   verify: '/exstorage/:contractAddress/sign'
 };
 
+const FileTransactions = {
+  fileTransactions: '/fileTransactions',
+  fileTransaction: '/fileTransactions/:fileTransactionId',
+};
+
 export default {
   Assets,
   Users,
   Bids,
-  Exstorage
+  Exstorage,
+  FileTransactions
 };

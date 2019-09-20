@@ -1,8 +1,8 @@
 import { rest, util, importer } from "blockapps-rest";
 import config from "../../load.config";
 
- const contractName = "FileTransaction";
-const contractFilename = `${util.cwd}/${config.dappPath}/fileTransaction/contracts/FileTransaction.sol`;
+ const contractName = "FileTransactionV10";
+const contractFilename = `${util.cwd}/${config.dappPath}/fileTransaction/contracts/FileTransactionV10.sol`;
 
  const options = { config };
 
