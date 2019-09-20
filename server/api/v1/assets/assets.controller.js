@@ -54,10 +54,11 @@ class AssetsController {
     }
   }
 
+/* Modified code to create study instead of asset */
   static async createAsset(req, res, next) {
     const { app, accessToken, body } = req;
     const assetArgs = { ...body.asset };
-    const args = {studyId: assetArgs.sku};
+    const args = {studyId: assetArgs.sku, studyName: assetArgs.name};
 
     try {
       const deploy = app.get('deploy');
@@ -69,8 +70,6 @@ class AssetsController {
       next(e)
     }
   }
-
-
 
   // TODO: throw errors correctly from dapp
   static async createAssetOld(req, res, next) {

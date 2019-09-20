@@ -133,14 +133,14 @@ function* createAsset(action) {
     if (response.success) {
       yield put(createAssetSuccess(response.data));
       yield put(
-        setUserMessage(`Asset '${response.data.name}' has been created`, true)
+        setUserMessage(`Study '${response.data.name}' has been created PJE`, true)
       );
     } else {
       yield put(createAssetFailure(response.error));
       // FIXME: if anything that could be better
       if (typeof response.error === "string")
         yield put(setUserMessage(response.error));
-      else yield put(setUserMessage("Unable to create asset"));
+      else yield put(setUserMessage("Unable to create study"));
     }
   } catch (err) {
     yield put(createAssetFailure(err));

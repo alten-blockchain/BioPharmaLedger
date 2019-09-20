@@ -2,7 +2,8 @@
 const factory = {
   createArgs(uid) {
     const args = {
-      studyId: uid
+      studyId: uid,
+      studyName:  'Study Name Default'
     }
     return args
   },
