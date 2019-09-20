@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from 'react-dom';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, Grid } from '@material-ui/core';
@@ -61,12 +62,14 @@ class AssetsList extends Component {
             .then(data => {
                 const responseString = JSON.stringify(data.data, null, 2);
                 this.setState({uploadResponse: responseString});
+                alert('File uploaded successfully.');
+                document.getElementById('upload').innerHTML = '';
+                document.getElementById("fileName").innerHTML = '-- choose a file to upload --';
                 return data;
             })
             .catch(function (error) {
                 throw error;
             });
-        alert('File uploaded successfully.');
     }
 
     submitDownload = event => {
@@ -77,7 +80,7 @@ class AssetsList extends Component {
         }
         const contractAddress = this.state.contractAddress;
         const exstorageURL = `${apiUrl}/exstorage/${contractAddress}`;
-        alert('exstorageURL: ' + exstorageURL);
+
         const downloadArgs = {contractAddress};
         fetch(exstorageURL, {
             method: HTTP_METHODS.GET,
@@ -107,6 +110,74 @@ class AssetsList extends Component {
     const ownedAssets = assets.filter((asset) => asset.owner === user.account);
     const requestedAssets = assets.filter((asset) => parseInt(asset.assetState, 10) === ASSET_STATE.BIDS_REQUESTED);
 
+    var json = '{"filter":[{"Sponsor":"CSL Behring","Study":"Hemophilia B Clinical Trial","Organization":"University of Colorado"},' +
+      '{"Sponsor":"CSL Behring","Study":"Hemophilia B Clinical Trial","Organization":"Hospital Vall Hebron"},' +
+      '{"Sponsor":"CSL Behring","Study":"Hemophilia B Clinical Trial","Organization":"CoreLab of PA"},' +
+      '{"Sponsor":"CSL Behring","Study":"Glocuse B Clinical Trial","Organization":"University of Colorado"},' +
+      '{"Sponsor":"CSL Behring","Study":"Glocuse B Clinical Trial","Organization":"Hospital Vall Hebron"},' +
+      '{"Sponsor":"CSL Behring","Study":"Glocuse B Clinical Trial","Organization":"CoreLab of PA"},' +
+      '{"Sponsor":"CSL Behring","Study":"Glocuse B Clinical Trial","Organization":"Royal Adelaide Hospital"},' +
+      '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial","Organization":"Royal Adelaide Hospital"},' +
+      '{"Sponsor":"Merck","Study":"Acute Coronary Syndrome Clinical Trial","Organization":"CoreLab of PA"},' +
+      '{"Sponsor":"Merck","Study":"Acute Oncology Clinical Trial","Organization":"CoreLab of NY"},' +
+      '{"Sponsor":"Merck","Study":"Acute Oncology Clinical Trial","Organization":"Hospital Cardiol—gica Aguascal"},' +
+      '{"Sponsor":"Merck","Study":"Acute Oncology Clinical Trial","Organization":"Royal Adelaide Hospital"},' +
+      '{"Sponsor":"Merck","Study":"Acute Diabetes Syndrome Clinical Trial","Organization":"CoreLab of PA"},' +
+      '{"Sponsor":"Merck","Study":"Acute Diabetes Syndrome Clinical Trial","Organization":"Royal Adelaide Hospital"},' +
+      '{"Sponsor":"Merck","Study":"Acute Diabetes Syndrome Clinical Trial","Organization":"Emek Medical Center"},' +
+      '{"Sponsor":"Merck","Study":"Acute Glocuse Syndrome Clinical Trial","Organization":"CoreLab of PA"}, ' +
+      '{"Sponsor":"Merck","Study":"Acute Glocuse Syndrome Clinical Trial","Organization":"Hospital Vall Hebron"}, ' +
+      '{"Sponsor":"Merck","Study":"Acute Glocuse Syndrome Clinical Trial","Organization":"CoreLab of NY"}]}';
+    try {
+      var filters = JSON.parse(json);
+    } catch (e) {
+      console.log(e);
+      return;
+    }
+
+    //populate sponsors
+    var sponsors = [], sponsorsHTML = [];
+    for (var x = 0; x < filters.filter.length; x++) {
+        var sponsor = filters.filter[x].Sponsor;
+        var study =  filters.filter[x].Study;
+        var html = (<option value={sponsor}>{sponsor}</option>);
+        if (!inArray(sponsor, sponsors)){
+            sponsors.push([sponsor, []]);
+            sponsorsHTML.push(html);
+        }
+        for (var i = 0; i < sponsors.length; i++) {
+            if (sponsors[i][0] === sponsor) {
+                if (!inSubArray(study, sponsors[i][1])) sponsors[i][1].push(study);
+            }
+        }
+    }
+
+    //populate studies
+    var studies = [];
+    for (var x = 0; x < filters.filter.length; x++) {
+      var study = filters.filter[x].Study;
+      var organization = filters.filter[x].Organization;
+      var html = (<option value={study}>{study}</option>);
+      if (!inArray(study, studies)){
+          studies.push([study, []]);
+      }
+      for (var i = 0; i < studies.length; i++) {
+          if (studies[i][0] === study) {
+              if (!inSubArray(organization, studies[i][1])) studies[i][1].push(organization);
+          }
+      }
+    }
+
+    //populate organizations
+    var organizations = [];
+    for (var x = 0; x < filters.filter.length; x++) {
+      var organization = filters.filter[x].Organization;
+      var html = (<option value={organization}>{organization}</option>);
+      if (!inArray(organization, organizations)){
+          organizations.push([organization, []]);
+      }
+    }
+
     var backButton = (
         <a onClick={showHideOptions} className="back-arrow">
             <img src={backArrow} />
@@ -119,34 +190,30 @@ class AssetsList extends Component {
         <div className="table-top-info">
             {this.isAdmin && backButton}
             <div className="drop-downs">
-                <span>Sponser:</span>
-                <select>
-                    <option hidden disabled selected value> -- select an option -- </option>
-                    <option value="">Merck</option>
-                    <option value="">Merck</option>
-                    <option value="">Merck</option>
+                <span>Sponsor:</span>
+                <select id="sponsor" data-dropdown="sponsor" onChange={() => selectSponsor(sponsors, document.getElementById('sponsor').value)}>
+                    <option hidden disabled selected>-- select sponsor --</option>
+                    {sponsorsHTML}
                 </select>
                 <span>Study:</span>
-                <select disabled>
-                    <option hidden disabled selected value></option>
-                    <option value="">FOLFOXIRI Plus Cetuximab vs. FOLFOXIRI Plus Bevacizumab</option>
-                    <option value="">Merck</option>
-                    <option value="">Merck</option>
-                    <option value="">Merck</option>
+                <select id="study" data-dropdown="study" onChange={() => selectStudy(studies, document.getElementById('study').value)} disabled>
+                    <option hidden disabled selected>-- select study --</option>
                 </select>
                 <span>Organization:</span>
-                <select disabled>
-                    <option hidden disabled selected value></option>
-                    <option value="">NY Hospital</option>
-                    <option value="">Core Labs</option>
-                    <option value="">ClinLogix</option>
+                <select id="organization" data-dropdown="organization" disabled>
+                    <option hidden disabled selected>-- select organization --</option>
                 </select>
                 <span>Category:</span>
-                <select disabled>
-                    <option hidden disabled selected value></option>
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
+                <select id="category" data-dropdown="category">
+                    <option hidden disabled selected>-- select category --</option>
+                    <option value="Demographics">Demographics</option>
+                    <option value="Results">Results</option>
+                </select>
+                <span>Access:</span>
+                <select id="access" data-dropdown="access">
+                    <option hidden disabled selected>-- select access type --</option>
+                    <option value="Open">Open</option>
+                    <option value="Blinded">Blinded</option>
                 </select>
                 <span>File(s):</span>
                 <div className="table-buttons">
@@ -161,10 +228,10 @@ class AssetsList extends Component {
                             <span id="fileName">-- choose a file to upload --</span>
                         </div>
                     </label>
-                    <Button className='upload-button' onClick={this.submitUpload}>
+                    <Button id='upload-button' onClick={this.submitUpload}>
                         Upload
                     </Button>
-                    <Button className='download-button' onClick={this.submitDownload}>
+                    <Button id='download-button' onClick={this.submitDownload}>
                         Download Selected Files
                     </Button>
                 </div>
@@ -186,9 +253,57 @@ class AssetsList extends Component {
   }
 }
 
+function selectSponsor(array, sponsor){
+    var html = [];
+    html.push(<option hidden disabled selected>-- select study --</option>);
+    for (var i = 0; i < array.length; i++) {
+        if (array[i][0] === sponsor) {
+            for (var x = 0; x < array[i][1].length; x++) {
+                html.push(<option value={array[i][1][x]}>{array[i][1][x]}</option>);
+            }
+        }
+    }
+    document.getElementById('study').disabled = false;
+    document.getElementById('organization').disabled = true;
+    ReactDOM.render(html, document.getElementById('study'));
+    document.getElementById('study').childNodes[0].selected = true;
+    try {
+        document.getElementById('organization').childNodes[0].selected = true;
+    } catch {
+
+    }
+}
+
+function selectStudy(array, study){
+    var html = [];
+    html.push(<option hidden disabled selected>-- select organization --</option>);
+    for (var i = 0; i < array.length; i++) {
+        if (array[i][0] === study) {
+            for (var x = 0; x < array[i][1].length; x++) {
+                html.push(<option value={array[i][1][x]}>{array[i][1][x]}</option>);
+            }
+        }
+    }
+    document.getElementById('organization').disabled = false;
+    ReactDOM.render(html, document.getElementById('organization'));
+    document.getElementById('organization').childNodes[0].selected = true;
+}
+
+function inArray(option, array) {
+    for(var i=0; i < array.length; i++) {
+        if(array[i][0] === option) return true;
+    }
+    return false;
+}
+
+function inSubArray(value, array) {
+    for(var i=0; i < array.length; i++) {
+        if(array[i] === value) return true;
+    }
+    return false;
+}
+
 function selectFile() {
-    document.getElementById("contract").value = "91fc76b137abe24b5948234c53f6abaab649ae76";
-    document.getElementById("contract").click();
     var input = document.getElementById('upload');
     input.click();
     input.onchange = function() {
@@ -205,8 +320,6 @@ function selectFile() {
             filename = filename.substring(0, 35) + "...";
         }
         document.getElementById("fileName").innerHTML = filename;
-        document.getElementById("metadata").value = filename;
-        document.getElementById("metadata").click();
     };
 }
 

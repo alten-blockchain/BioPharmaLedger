@@ -5,6 +5,7 @@ import "/blockapps-sol/dist/rest/contracts/RestStatus.sol";
 import "/blockapps-sol/dist/auth/user/contracts/UserManager.sol";
 import "/dapp/asset/contracts/AssetManager.sol";
 import "/dapp/study/contracts/StudyManager.sol";
+import "/dapp/fileTransaction/contracts/FileTransactionManager.sol";
 import "/dapp/ttPermission/contracts/TtPermissionManager.sol";
 /**
  * Single entry point to all the project's contract
@@ -15,6 +16,7 @@ import "/dapp/ttPermission/contracts/TtPermissionManager.sol";
    UserManager public userManager;
    AssetManager public assetManager;
    StudyManager public studyManager;
+   FileTransactionManager public fileTransactionManager;
    TtPermissionManager public ttPermissionManager;
 
    // internal
@@ -30,5 +32,6 @@ import "/dapp/ttPermission/contracts/TtPermissionManager.sol";
      userManager = new UserManager(msg.sender);
      assetManager = new AssetManager(ttPermissionManager);
      studyManager = new StudyManager();
+     fileTransactionManager = new FileTransactionManager();
    }
  }
