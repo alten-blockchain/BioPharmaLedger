@@ -1,8 +1,8 @@
 import { rest, util, importer } from "blockapps-rest";
 import config from "../../load.config";
 
-const contractName = "Studyv2";
-const contractFilename = `${util.cwd}/${config.dappPath}/study/contracts/Studyv2.sol`;
+const contractName = "Studyv3";
+const contractFilename = `${util.cwd}/${config.dappPath}/study/contracts/Studyv3.sol`;
 
 const options = { config };
 

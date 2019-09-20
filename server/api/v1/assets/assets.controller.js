@@ -58,7 +58,7 @@ class AssetsController {
   static async createAsset(req, res, next) {
     const { app, accessToken, body } = req;
     const assetArgs = { ...body.asset };
-    const args = {studyId: assetArgs.sku, studyName: assetArgs.name};
+    const args = {studyId: assetArgs.sku, studyName: assetArgs.name, therapeuticArea: assetArgs.description, sponsorId: assetArgs.price, croId: assetArgs.price};
 
     try {
       const deploy = app.get('deploy');

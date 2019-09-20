@@ -94,7 +94,7 @@ class CreateAssetModal extends Component {
           openCreateAssetOverlay();
           this.props.reset();
         }}>
-          Create asset
+          Create Study
         </Button>
         <Dialog
           open={isOpen}
@@ -102,12 +102,12 @@ class CreateAssetModal extends Component {
           aria-labelledby="form-dialog-title"
         >
           <Form onSubmit={handleSubmit(this.submit)}>
-            <DialogTitle id="form-dialog-title">Create Asset</DialogTitle>
+            <DialogTitle id="form-dialog-title">Create Study</DialogTitle>
             <DialogContent>
               <Field
                 name="sku"
                 type="text"
-                placeholder="Stock Keeping Unit"
+                placeholder="Study ID"
                 margin="normal"
                 component={ReduxedTextField}
                 fullWidth
@@ -116,7 +116,7 @@ class CreateAssetModal extends Component {
               <Field
                 name="name"
                 type="text"
-                placeholder="Name"
+                placeholder="Study Name"
                 margin="normal"
                 component={ReduxedTextField}
                 fullWidth
@@ -125,7 +125,7 @@ class CreateAssetModal extends Component {
               <Field
                 name="description"
                 type="text"
-                placeholder="Description"
+                placeholder="Therapeutic Area"
                 margin="normal"
                 component={ReduxedTextField}
                 fullWidth
@@ -134,7 +134,16 @@ class CreateAssetModal extends Component {
               <Field
                 name="price"
                 type="text"
-                placeholder="Price"
+                placeholder="Sponsor Id"
+                margin="normal"
+                component={ReduxedTextField}
+                fullWidth
+                required
+              />
+              <Field
+                name="croId"
+                type="text"
+                placeholder="CRO Id"
                 margin="normal"
                 component={ReduxedTextField}
                 fullWidth
