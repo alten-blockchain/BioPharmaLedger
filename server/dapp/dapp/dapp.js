@@ -4,6 +4,7 @@ import config from '../../load.config';
 import * as userManagerJs from '../../blockapps-sol/dist/auth/user/userManager';
 import assetManagerJs from '../asset/assetManager';
 import studyManagerJs from '../study/studyManager';
+import organizationManagerJs from '../organization/organizationManager';
 import fileTransactionManagerJs from '../fileTransaction/fileTransactionManager';
 import ttPermissionManagerJs from '../ttPermission/ttPermissionManager';
 import exstorageJs from '../exstorage/exstorage';
@@ -11,7 +12,8 @@ import { yamlWrite } from "../../helpers/config";
 
 const contractName = 'TtDapp';
 const contractFilename = `${config.dappPath}/dapp/contracts/ttDapp.sol`;
-const managersNames = ['userManager', 'assetManager', 'ttPermissionManager', 'studyManager', 'fileTransactionManager'];
+const managersNames = ['userManager', 'assetManager', 'ttPermissionManager', 
+                        'studyManager', 'organizationManager', 'fileTransactionManager'];
 
 const options = { config }
 
@@ -52,9 +54,12 @@ async function bind(token, _contract) {
   const unboundManagers = await getManagers(contract);
   const userManager = userManagerJs.bind(token, unboundManagers.userManager);
   const assetManager = assetManagerJs.bind(token, unboundManagers.assetManager);
+  const ttPermissionManager = ttPermissionManagerJs.bind(token, unboundManagers.ttPermissionManager);
+
+  //BioPharma Ledger Managers
   const studyManager = studyManagerJs.bind(token, unboundManagers.studyManager);
   const fileTransactionManager = fileTransactionManagerJs.bind(token, unboundManagers.fileTransactionManager);
-  const ttPermissionManager = ttPermissionManagerJs.bind(token, unboundManagers.ttPermissionManager);
+  const organizationManager = organizationManagerJs.bind(token,unboundManagers.organizationManager);
 
   // deploy
   contract.deploy = async function (deployFilename) {
@@ -62,6 +67,7 @@ async function bind(token, _contract) {
       userManager,
       assetManager,
       studyManager,
+      organizationManager,
       fileTransactionManager,
       ttPermissionManager,
     }
@@ -107,6 +113,10 @@ async function bind(token, _contract) {
 
   contract.createStudy = async function (args) {
     return await studyManager.createStudy(args);
+  }
+
+  contract.createOrganization = async function (args) {
+    return await organizationManager.createOrganization(args);
   }
 
   contract.getFileTransactions = async function (args) {

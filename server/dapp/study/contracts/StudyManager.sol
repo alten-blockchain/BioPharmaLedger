@@ -1,4 +1,3 @@
-
 import "/blockapps-sol/dist/collections/hashmap/contracts/Hashmap.sol";
 import "/blockapps-sol/dist/rest/contracts/RestStatus.sol";
 import "./Studyv6.sol";

@@ -1,42 +1,44 @@
 import { rest, util, importer } from "blockapps-rest";
 import encodingHelpers from "../../helpers/encoding";
 import config from "../../load.config";
-
 const contractName = "Asset";
 const contractFilename = `${process.cwd()}/${
   config.dappPath
 }/asset/contracts/Asset.sol`;
-
 const options = { config };
 
+/*
+ * Upload Contract
+ */
 async function uploadContract(token, ttPermissionManagerContract, args) {
   const getKeyResponse = await rest.getKey(token, options);
-
   const contractArgs = Object.assign({}, toBytes32(args), {
     ttPermissionManager: ttPermissionManagerContract.address,
     owner: getKeyResponse
   });
-
   const contractArgs1 = {
     name: contractName,
     source: await importer.combine(contractFilename),
     args: util.usc(contractArgs)
   };
-
   const contract = await rest.createContract(token, contractArgs1, options);
   contract.src = "removed";
-
   return bind(token, contract);
 }
 
+/*
+ * Bind
+ */
 function bind(token, contract) {
   contract.getState = async function() {
     return await rest.getState(contract, options);
   };
-
   return contract;
 }
 
+/*
+ * Bind Address
+ */
 function bindAddress(token, address) {
   let contract = {
     name: contractName,
@@ -45,15 +47,16 @@ function bindAddress(token, address) {
   return bind(token, contract);
 }
 
+/*
+ * Wait for Required Update
+ */
 async function waitForRequiredUpdate(sku, searchCounter) {
   function predicate(response) {
     if (response.length) return response;
   }
-
   const contract = {
     name: contractName
   };
-
   const copyOfOptions = {
     ...options,
     query: {
@@ -61,10 +64,8 @@ async function waitForRequiredUpdate(sku, searchCounter) {
       sku: `eq.${sku}`
     }
   };
-
   const results = await rest.searchUntil(contract, predicate, copyOfOptions);
   const asset = fromBytes32(results[0]);
-
   return asset;
 }
 
