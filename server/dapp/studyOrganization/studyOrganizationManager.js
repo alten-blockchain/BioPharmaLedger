@@ -45,7 +45,7 @@ async function createStudyOrganization(token, contract, args) {
     ...options,
     history: [studyOrganizationJs.contractName]
   };
-  const [restStatus, studyError, studyAddress] = await rest.call(token, callArgs, copyOfOptions);
+  const [restStatus, studyError, studyOrganizationAddress] = await rest.call(token, callArgs, copyOfOptions);
   if (restStatus != RestStatus.CREATED)
     throw new rest.RestError(restStatus, studyError, { callArgs });
   const contractArgs = {
