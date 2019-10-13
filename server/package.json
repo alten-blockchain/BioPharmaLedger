@@ -33,6 +33,8 @@
     "token-getter": "node node_modules/blockapps-rest/dist/util/oauth.client.js --flow authorization-code --config config/${SERVER:-token-getter}.config.yaml",
     "test:study": "yarn mocha-babel dapp/study/test -b",
     "test:organization": "yarn mocha-babel dapp/organization/test -b",
+    "test:studyUser": "yarn mocha-babel dapp/studyUser/test -b",
+    "test:studyOrganization": "yarn mocha-babel dapp/studyOrganization/test -b",
     "test:fileTransaction": "yarn mocha-babel dapp/fileTransaction/test -b",
     "test:asset": "yarn mocha-babel dapp/asset/test -b",
     "test:exstorage": "yarn mocha-babel dapp/exstorage/test -b",

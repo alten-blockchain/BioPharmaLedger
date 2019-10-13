@@ -6,6 +6,8 @@ import "/blockapps-sol/dist/auth/user/contracts/UserManager.sol";
 import "/dapp/asset/contracts/AssetManager.sol";
 import "/dapp/study/contracts/StudyManager.sol";
 import "/dapp/organization/contracts/OrganizationManager.sol";
+import "/dapp/studyOrganization/contracts/StudyOrganizationManager.sol";
+import "/dapp/studyUser/contracts/StudyUserManager.sol";
 import "/dapp/fileTransaction/contracts/FileTransactionManager.sol";
 import "/dapp/ttPermission/contracts/TtPermissionManager.sol";
 /**
@@ -18,6 +20,8 @@ import "/dapp/ttPermission/contracts/TtPermissionManager.sol";
    AssetManager public assetManager;
    StudyManager public studyManager;
    OrganizationManager public organizationManager;
+   StudyOrganizationManager public studyOrganizationManager;
+   StudyUserManager public studyUserManager;
    FileTransactionManager public fileTransactionManager;
    TtPermissionManager public ttPermissionManager;
 
@@ -35,6 +39,8 @@ import "/dapp/ttPermission/contracts/TtPermissionManager.sol";
      assetManager = new AssetManager(ttPermissionManager);
      studyManager = new StudyManager();
      organizationManager = new OrganizationManager();
+     studyOrganizationManager = new StudyOrganizationManager();
+     studyUserManager = new StudyUserManager();
      fileTransactionManager = new FileTransactionManager();
    }
  }
