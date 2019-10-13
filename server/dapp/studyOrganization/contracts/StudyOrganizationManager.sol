@@ -3,12 +3,12 @@ import "/blockapps-sol/dist/rest/contracts/RestStatus.sol";
 import "./StudyOrganization.sol";
 
 contract StudyOrganizationManager is Util, RestStatus {
-  Hashmap studyorganizations;
+  Hashmap studyOrganizations;
   /*
    * Constructor
    */
   constructor () public {
-    studyorganizations = new Hashmap();
+    studyOrganizations = new Hashmap();
   }
   function createStudyOrganization(
     string _studyId,
@@ -27,13 +27,13 @@ contract StudyOrganizationManager is Util, RestStatus {
       _updateDate,
       _updateBy
         );
-    studyorganizations.put(_studyId, studyOrganization);
+    studyOrganizations.put(_studyId, studyOrganization);
     // created
     return (RestStatus.CREATED, 0, studyOrganization);
   }
 
   function exists(string _studyId) public view returns (bool) {
-    return studyorganizations.contains(_studyId);
+    return studyOrganizations.contains(_studyId);
   }
 
 }

@@ -1,18 +1,18 @@
 import "/blockapps-sol/dist/collections/hashmap/contracts/Hashmap.sol";
 import "/blockapps-sol/dist/rest/contracts/RestStatus.sol";
-import "./StudyUSer.sol";
+import "./StudyUser.sol";
 
-contract StudyUSerManager is Util, RestStatus {
-  Hashmap studyusers;
+contract StudyUserManager is Util, RestStatus {
+  Hashmap studyUsers;
   /*
    * Constructor
    */
   constructor () public {
-    studyusers = new Hashmap();
+    studyUsers = new Hashmap();
   }
   function createStudyUser(
     string _studyId,
-    string _userd,
+    string _userId,
     string _isActive,
     string _updateDate,
     string _updateBy
@@ -22,18 +22,18 @@ contract StudyUSerManager is Util, RestStatus {
     // create new
     StudyUser studyUser = new StudyUser(
       _studyId,
-      _orgId,
+      _userId,
       _isActive,
       _updateDate,
       _updateBy
         );
-    studyorganizations.put(_studyId, studyUser);
+    studyUsers.put(_studyId, studyUser);
     // created
     return (RestStatus.CREATED, 0, studyUser);
   }
 
   function exists(string _studyId) public view returns (bool) {
-    return studyusers.contains(_studyId);
+    return studyUsers.contains(_studyId);
   }
 
 }

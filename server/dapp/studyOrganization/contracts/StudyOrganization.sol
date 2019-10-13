@@ -20,7 +20,7 @@ contract StudyOrganization is RestStatus, Util { /*is Searchable, AssetState, As
     string _updateBy
   ) {
     studyId = _studyId;
-    orgID = _orgId;
+    orgId = _orgId;
     isActive = _isActive;
     updateDate = _updateDate;
     updateBy = _updateBy;

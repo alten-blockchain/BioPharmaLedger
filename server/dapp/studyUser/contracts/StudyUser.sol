@@ -20,7 +20,7 @@ contract StudyUser is RestStatus, Util { /*is Searchable, AssetState, AssetError
     string _updateBy
   ) {
     studyId = _studyId;
-    orgID = _userId;
+    userId = _userId;
     isActive = _isActive;
     updateDate = _updateDate;
     updateBy = _updateBy;

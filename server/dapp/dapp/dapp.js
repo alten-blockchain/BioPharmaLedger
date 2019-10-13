@@ -6,7 +6,7 @@ import assetManagerJs from '../asset/assetManager';
 import studyManagerJs from '../study/studyManager';
 import organizationManagerJs from '../organization/organizationManager';
 import studyOrganizationManagerJs from '../studyOrganization/studyOrganizationManager';
-import studyUserJs from '../studyUser/studyUserManager';
+import studyUserManagerJs from '../studyUser/studyUserManager';
 import fileTransactionManagerJs from '../fileTransaction/fileTransactionManager';
 import ttPermissionManagerJs from '../ttPermission/ttPermissionManager';
 import exstorageJs from '../exstorage/exstorage';
@@ -65,7 +65,7 @@ async function bind(token, _contract) {
   const fileTransactionManager = fileTransactionManagerJs.bind(token, unboundManagers.fileTransactionManager);
   const organizationManager = organizationManagerJs.bind(token,unboundManagers.organizationManager);
   const studyOrganizationManager = studyOrganizationManagerJs.bind(token,unboundManagers.studyOrganizationManager);
-  const studyUserManager = studyUser.bind(token,unboundManagers.studyUserManager);
+  const studyUserManager = studyUserManagerJs.bind(token,unboundManagers.studyUserManager);
 
   // deploy
   contract.deploy = async function (deployFilename) {
@@ -194,15 +194,14 @@ async function deploy(token, contract, deployFilename, managers) {
       address: contract.address,
     },
   };
+  
   // write
   if (config.apiDebug) {
     console.log('deploy filename:', deployFilename);
     //console.log(yamlSafeDumpSync(deployment));
     console.log(deployment);
   }
-
   yamlWrite(deployment, deployFilename);
-
   return deployment;
 }
 
