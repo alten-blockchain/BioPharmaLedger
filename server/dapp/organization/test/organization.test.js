@@ -1,6 +1,5 @@
 import { rest, util } from 'blockapps-rest';
 import { assert } from 'chai';
-import factory from './organization.factory';
 import organizationJs from '../organization';
 import config from '../../../load.config';
 import dotenv from 'dotenv';
@@ -18,8 +17,12 @@ describe('Organization Tests', function () {
   });
 
   it('Create Organization contract', async function () {
-    const uid = util.uid()
-    const args = factory.createArgs(uid);
+    const args = {
+      orgId:    util.uid(),
+      orgName:  'Organization Name',
+      orgType:  'Sponsor',
+      isActive: 1
+    }
     const contract = await organizationJs.uploadContract(adminCredentials, args);
     const state = await contract.getState();
     assert.equal(state.orgId, args.orgId, 'orgId')
